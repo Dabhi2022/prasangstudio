@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRASANG Photography Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --gold: #f5c518;
+    --gold-dim: #c9a012;
+    --gold-pale: rgba(245,197,24,0.12);
+    --bg: #0c0c0c;
+    --bg2: #111111;
+    --bg3: #161616;
+    --text: #e8e2d6;
+    --muted: #888;
+    --border: rgba(245,197,24,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 72px;
+    background: rgba(12,12,12,0.82);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.4s;
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .logo span { color: var(--text); font-weight: 300; }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    position: relative;
+    opacity: 0.75;
+    transition: opacity 0.3s, color 0.3s;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .hamburger span { width: 24px; height: 1px; background: var(--gold); transition: all 0.3s; display: block; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    background:
+      linear-gradient(160deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.8) 100%),
+      url('https://images.unsplash.com/photo-1606216794079-73fcbce70d37?w=1800&q=80') center/cover no-repeat;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(245,197,24,0.08) 0%, transparent 65%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 0 5vw;
+    animation: fadeUp 1.2s ease both;
+  }
+  .hero-tag {
+    font-size: 0.72rem; letter-spacing: 0.38em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1.6rem;
+    display: block;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 7.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin-bottom: 1.4rem;
+    animation: fadeUp 1s 0.35s ease both;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero p {
+    font-size: clamp(0.9rem, 1.5vw, 1.15rem);
+    color: rgba(232,226,214,0.7);
+    letter-spacing: 0.08em;
+    margin-bottom: 2.8rem;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+  .btn-gold {
+    display: inline-block;
+    padding: 0.9rem 2.8rem;
+    border: 1px solid var(--gold);
+    color: var(--bg);
+    background: var(--gold);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.2s;
+    animation: fadeUp 1s 0.65s ease both;
+  }
+  .btn-gold:hover {
+    background: transparent;
+    color: var(--gold);
+    box-shadow: 0 0 28px rgba(245,197,24,0.25);
+    transform: translateY(-2px);
+  }
+  .btn-outline {
+    display: inline-block;
+    padding: 0.9rem 2.8rem;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    background: transparent;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.2s;
+  }
+  .btn-outline:hover {
+    background: var(--gold);
+    color: var(--bg);
+    transform: translateY(-2px);
+  }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--muted); font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+    animation: fadeIn 2s 1.2s ease both;
+  }
+  .hero-scroll .line {
+    width: 1px; height: 44px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollLine 2s 1.5s infinite ease;
+  }
+
+  /* ─── SECTION SHARED ─── */
+  section { padding: 7rem 5vw; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.38em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.8rem; display: block;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-sub {
+    color: var(--muted);
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    max-width: 520px;
+    line-height: 1.8;
+  }
+  .section-head { margin-bottom: 3.5rem; }
+  .divider {
+    width: 48px; height: 1px;
+    background: var(--gold);
+    margin: 1.2rem 0 1.6rem;
+  }
+
+  /* ─── PORTFOLIO ─── */
+  #portfolio { background: var(--bg2); }
+  .portfolio-filter {
+    display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+  }
+  .filter-btn {
+    padding: 0.45rem 1.4rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 2px;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--gold); color: var(--gold);
+    background: var(--gold-pale);
+  }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .portfolio-item {
+    position: relative; overflow: hidden;
+    aspect-ratio: 4/3;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  .portfolio-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s;
+    filter: brightness(0.88) saturate(0.85);
+  }
+  .portfolio-item:hover img {
+    transform: scale(1.08);
+    filter: brightness(0.65) saturate(0.7);
+  }
+  .portfolio-overlay {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: flex-start; justify-content: flex-end;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+  .portfolio-overlay .cat {
+    font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.3rem;
+  }
+  .portfolio-overlay .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; color: #fff; font-weight: 300;
+  }
+  .portfolio-item.tall { grid-row: span 2; aspect-ratio: auto; }
+  .portfolio-item.tall img { height: 100%; }
+
+  /* ─── SERVICES ─── */
+  #services { background: var(--bg); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 1.5rem;
+  }
+  .service-card {
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 2.2rem 2rem;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .service-card:hover {
+    border-color: var(--border);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon {
+    width: 52px; height: 52px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.4rem;
+    font-size: 1.3rem;
+    color: var(--gold);
+    transition: background 0.3s;
+  }
+  .service-card:hover .service-icon { background: var(--gold-pale); }
+  .service-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.45rem; font-weight: 400;
+    color: #fff; margin-bottom: 0.8rem;
+  }
+  .service-card p {
+    font-size: 0.85rem; color: var(--muted);
+    line-height: 1.8; letter-spacing: 0.02em;
+  }
+  .service-card .price {
+    margin-top: 1.4rem;
+    font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    background: var(--bg2);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5vw;
+    align-items: center;
+  }
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-img-wrap img {
+    width: 100%; aspect-ratio: 4/5;
+    object-fit: cover;
+    border-radius: 3px;
+    filter: saturate(0.7);
+  }
+  .about-img-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: -1.2rem; right: -1.2rem;
+    width: 60%; height: 60%;
+    border: 1px solid var(--gold);
+    border-radius: 3px;
+    z-index: -1;
+  }
+  .about-badge {
+    position: absolute; bottom: 2rem; left: -1.5rem;
+    background: var(--gold);
+    color: var(--bg);
+    padding: 1.2rem 1.6rem;
+    text-align: center;
+    border-radius: 3px;
+  }
+  .about-badge strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 600; line-height: 1;
+  }
+  .about-badge span { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; }
+  .about-stats {
+    display: flex; gap: 2rem; margin: 2rem 0;
+  }
+  .stat { border-left: 1px solid var(--gold); padding-left: 1rem; }
+  .stat .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300; color: var(--gold);
+  }
+  .stat .label {
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  #testimonials { background: var(--bg3); }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.5rem;
+  }
+  .testi-card {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 2rem;
+    transition: border-color 0.3s;
+  }
+  .testi-card:hover { border-color: var(--border); }
+  .stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 1rem; letter-spacing: 3px; }
+  .testi-card blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: rgba(232,226,214,0.85);
+    line-height: 1.7;
+    margin-bottom: 1.4rem;
+  }
+  .testi-author { display: flex; align-items: center; gap: 0.9rem; }
+  .testi-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    object-fit: cover; border: 1px solid var(--border);
+    filter: grayscale(0.4);
+  }
+  .testi-name { font-size: 0.85rem; color: var(--text); }
+  .testi-role { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--bg);
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5vw;
+    align-items: start;
+  }
+  .contact-info { padding-top: 0.5rem; }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .contact-icon {
+    width: 44px; height: 44px; min-width: 44px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 1rem;
+    transition: background 0.3s;
+  }
+  .contact-item:hover .contact-icon { background: var(--gold-pale); }
+  .contact-item-label {
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.25rem;
+  }
+  .contact-item-val { font-size: 0.9rem; color: var(--text); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label {
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .form-group input,
+  .form-group textarea {
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 3px;
+    padding: 0.85rem 1rem;
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    resize: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(245,197,24,0.08);
+  }
+  .form-group textarea { height: 130px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #080808;
+    border-top: 1px solid var(--border);
+    padding: 3rem 5vw 2rem;
+  }
+  .footer-inner {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 1.8rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .footer-logo span { color: rgba(232,226,214,0.6); font-weight: 300; }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .social-row { display: flex; gap: 0.8rem; }
+  .social-btn {
+    width: 38px; height: 38px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 0.85rem;
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s, background 0.3s;
+  }
+  .social-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-pale); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-copy { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
+  .footer-copy span { color: var(--gold); }
+
+  /* ─── WHATSAPP FLOAT ─── */
+  .wa-float {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    width: 52px; height: 52px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.5rem;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: pulse-wa 3s infinite;
+  }
+  .wa-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(37,211,102,0.55);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes scrollLine {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    50%  { transform: scaleY(1); transform-origin: top; }
+    51%  { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+  @keyframes pulse-wa {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+    50%       { box-shadow: 0 4px 32px rgba(37,211,102,0.65); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    #about, #contact {
+      grid-template-columns: 1fr;
+    }
+    .about-img-wrap { max-width: 480px; }
+    .about-badge { left: 0; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; flex-direction: column; position: fixed;
+      top: 72px; left: 0; right: 0; background: rgba(12,12,12,0.97);
+      padding: 2rem 5vw; gap: 1.5rem; border-bottom: 1px solid var(--border); }
+    .nav-links.open { display: flex; }
+    .hamburger { display: flex; }
+    .about-stats { flex-wrap: wrap; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="logo">PRASANG <span>Studio</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-content">
+    <span class="hero-tag">Prasang Photography Studio — Est. 2016</span>
+    <h1>Capture Your <em>Best</em><br>Moments</h1>
+    <p>Professional Photography for Every Occasion</p>
+    <a href="#contact" class="btn-gold">Book Now</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-head reveal">
+    <span class="section-label">Our Work</span>
+    <h2 class="section-title">A Glimpse of <em>Excellence</em></h2>
+    <div class="divider"></div>
+    <p class="section-sub">From intimate portraits to grand weddings — every frame tells a story worth remembering.</p>
+  </div>
+  <div class="portfolio-filter reveal">
+    <button class="filter-btn active" onclick="filterPortfolio(this,'all')">All</button>
+    <button class="filter-btn" onclick="filterPortfolio(this,'wedding')">Wedding</button>
+    <button class="filter-btn" onclick="filterPortfolio(this,'portrait')">Portrait</button>
+    <button class="filter-btn" onclick="filterPortfolio(this,'fashion')">Fashion</button>
+    <button class="filter-btn" onclick="filterPortfolio(this,'nature')">Nature</button>
+  </div>
+  <div class="portfolio-grid" id="portfolioGrid">
+    <div class="portfolio-item tall" data-cat="wedding">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=75" alt="Wedding">
+      <div class="portfolio-overlay"><span class="cat">Wedding</span><span class="title">Golden Vows</span></div>
+    </div>
+    <div class="portfolio-item" data-cat="portrait">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=75" alt="Portrait">
+      <div class="portfolio-overlay"><span class="cat">Portrait</span><span class="title">Inner Light</span></div>
+    </div>
+    <div class="portfolio-item" data-cat="fashion">
+      <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=75" alt="Fashion">
+      <div class="portfolio-overlay"><span class="cat">Fashion</span><span class="title">Couture Edit</span></div>
+    </div>
+    <div class="portfolio-item" data-cat="nature">
+      <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&q=75" alt="Nature">
+      <div class="portfolio-overlay"><span class="cat">Nature</span><span class="title">Golden Hour</span></div>
+    </div>
+    <div class="portfolio-item" data-cat="wedding">
+      <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800&q=75" alt="Wedding">
+      <div class="portfolio-overlay"><span class="cat">Wedding</span><span class="title">Sacred Ritual</span></div>
+    </div>
+    <div class="portfolio-item tall" data-cat="fashion">
+      <img src="https://images.unsplash.com/photo-1554412933-514a83d2f3c8?w=800&q=75" alt="Fashion">
+      <div class="portfolio-overlay"><span class="cat">Fashion</span><span class="title">Urban Edge</span></div>
+    </div>
+    <div class="portfolio-item" data-cat="portrait">
+      <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=75" alt="Portrait">
+      <div class="portfolio-overlay"><span class="cat">Portrait</span><span class="title">Bold & Raw</span></div>
+    </div>
+    <div class="portfolio-item" data-cat="nature">
+      <img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=800&q=75" alt="Nature">
+      <div class="portfolio-overlay"><span class="cat">Nature</span><span class="title">Misty Falls</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-head reveal">
+    <span class="section-label">What We Offer</span>
+    <h2 class="section-title">Our <em>Services</em></h2>
+    <div class="divider"></div>
+    <p class="section-sub">Tailored photography experiences crafted with passion and precision.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon"><i class="fa-solid fa-heart"></i></div>
+      <h3>Wedding Photography</h3>
+      <p>From the first look to the last dance, we document every heartfelt moment of your celebration with artistry and care.</p>
+      <div class="price">Starting ₹25,000</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon"><i class="fa-solid fa-user"></i></div>
+      <h3>Portrait Shoot</h3>
+      <p>Professional individual and family portraits that capture authentic expressions in a relaxed and creative studio environment.</p>
+      <div class="price">Starting ₹4,500</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon"><i class="fa-solid fa-calendar-star"></i></div>
+      <h3>Event Coverage</h3>
+      <p>Corporate events, birthdays, engagements — our team ensures every significant moment of your event is beautifully preserved.</p>
+      <div class="price">Starting ₹8,000</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon"><i class="fa-solid fa-shirt"></i></div>
+      <h3>Fashion & Editorial</h3>
+      <p>High-concept fashion shoots with creative direction, professional lighting, and post-production retouching included.</p>
+      <div class="price">Starting ₹12,000</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon"><i class="fa-solid fa-baby"></i></div>
+      <h3>Maternity & Baby</h3>
+      <p>Gentle, emotive photography that celebrates new beginnings — from maternity to newborn and first milestones.</p>
+      <div class="price">Starting ₹6,000</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon"><i class="fa-solid fa-film"></i></div>
+      <h3>Videography</h3>
+      <p>Cinematic films and highlight reels that tell your story in motion — available as an add-on to any photo package.</p>
+      <div class="price">Starting ₹15,000</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-img-wrap reveal">
+    <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=900&q=75" alt="Studio">
+    <div class="about-badge"><strong>9+</strong><span>Years of Art</span></div>
+  </div>
+  <div class="about-text reveal">
+    <span class="section-label">Our Story</span>
+    <h2 class="section-title">Where <em>Art</em> Meets<br>Emotion</h2>
+    <div class="divider"></div>
+    <p style="color:var(--muted);line-height:1.9;font-size:0.9rem;margin-bottom:1rem;">
+      PRASANG Photography Studio was founded in Vadodara with a singular vision — to create imagery that moves people. Over nearly a decade, we have worked with hundreds of families, couples, and brands, building a reputation for soulful, technically flawless photography.
+    </p>
+    <p style="color:var(--muted);line-height:1.9;font-size:0.9rem;margin-bottom:2rem;">
+      Our studio is equipped with state-of-the-art lighting and camera systems. But our greatest asset remains a deeply personal approach — taking time to understand each client and crafting visuals that feel true.
+    </p>
+    <div class="about-stats">
+      <div class="stat"><div class="num">850+</div><div class="label">Happy Clients</div></div>
+      <div class="stat"><div class="num">1200+</div><div class="label">Sessions Done</div></div>
+      <div class="stat"><div class="num">12</div><div class="label">Awards Won</div></div>
+    </div>
+    <a href="#contact" class="btn-gold">Work With Us</a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-head reveal">
+    <span class="section-label">Client Love</span>
+    <h2 class="section-title">What People <em>Say</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <blockquote>"PRASANG captured our wedding beyond our wildest expectations. Every photo tells a story we'll cherish forever."</blockquote>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=70" alt="Client">
+        <div><div class="testi-name">Priya Mehta</div><div class="testi-role">Bride — Baroda Wedding</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <blockquote>"The portrait session was so comfortable and fun. The results were stunning — I couldn't believe how professional they looked."</blockquote>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=70" alt="Client">
+        <div><div class="testi-name">Rahul Sharma</div><div class="testi-role">Corporate Portrait Client</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Our fashion campaign photos got an overwhelming response on Instagram. PRASANG truly understands the brand vision."</blockquote>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=100&q=70" alt="Client">
+        <div><div class="testi-name">Ananya Desai</div><div class="testi-role">Fashion Brand Owner</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-info reveal">
+    <span class="section-label">Get In Touch</span>
+    <h2 class="section-title">Let's Create<br><em>Together</em></h2>
+    <div class="divider"></div>
+    <p style="color:var(--muted);font-size:0.88rem;line-height:1.8;margin-bottom:2rem;">
+      Ready to book a session or have a question? We'd love to hear from you. Reach out through any channel below.
+    </p>
+    <div class="contact-item">
+      <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+      <div><div class="contact-item-label">Phone</div><div class="contact-item-val">+91 98765 43210</div></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+      <div><div class="contact-item-label">Email</div><div class="contact-item-val">hello@prasangstudio.com</div></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+      <div><div class="contact-item-label">Location</div><div class="contact-item-val">12, Alkapuri Arcade, Vadodara, Gujarat — 390007</div></div>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Priya Mehta">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="hello@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="text" placeholder="+91 00000 00000">
+      </div>
+      <div class="form-group">
+        <label>Service Interested In</label>
+        <input type="text" placeholder="e.g. Wedding Photography">
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell us about your vision, date, and any special requirements..."></textarea>
+      </div>
+      <button class="btn-gold" style="align-self:flex-start">Send Message &nbsp;→</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="footer-logo">PRASANG <span>Studio</span></a>
+    <nav class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="social-row">
+      <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="#" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
+      <a href="#" class="social-btn"><i class="fa-brands fa-pinterest-p"></i></a>
+      <a href="#" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 <span>PRASANG Photography Studio</span>. All rights reserved.</p>
+    <p class="footer-copy">Crafted with <span>♥</span> in Vadodara, Gujarat</p>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/919876543210" class="wa-float" target="_blank" rel="noopener">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<script>
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Portfolio filter
+  function filterPortfolio(btn, cat) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.portfolio-item').forEach(item => {
+      const show = cat === 'all' || item.dataset.cat === cat;
+      item.style.transition = 'opacity 0.4s, transform 0.4s';
+      item.style.opacity = show ? '1' : '0.15';
+      item.style.transform = show ? 'scale(1)' : 'scale(0.96)';
+      item.style.pointerEvents = show ? '' : 'none';
+    });
+  }
+
+  // Navbar background on scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.background =
+      window.scrollY > 60 ? 'rgba(8,8,8,0.97)' : 'rgba(12,12,12,0.82)';
+  });
+</script>
+</body>
+</html>
